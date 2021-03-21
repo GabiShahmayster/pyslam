@@ -51,8 +51,25 @@ from feature_tracker_configs import FeatureTrackerConfigs
 from parameters import Parameters  
 import multiprocessing as mp 
 
+import pydevd_pycharm
+
+def init_remote_debugger(remote_debug_server_host: str = 'localhost',
+                         remote_debug_server_port: int = 37409) -> bool:
+    print('attempting to connect to remote debugger')
+    try:
+        pydevd_pycharm.settrace(remote_debug_server_host,
+                                port=remote_debug_server_port,
+                                stdoutToServer=True,
+                                stderrToServer=True,
+                                suspend=False)
+        return True
+    except:
+        print('could not connect to remote debugger')
+        return False
 
 if __name__ == "__main__":
+
+    init_remote_debugger()
 
     config = Config()
 
